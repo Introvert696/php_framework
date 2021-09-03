@@ -3,6 +3,7 @@
 
 namespace core\base\settings;
 
+
 class Settings 
 {
     static private $_instance;
@@ -60,4 +61,14 @@ class Settings
     static public function get($properiety){
         return self::instance()->$properiety;
     }
+    public function clueProperities($class){
+        $baseProperties = [];
+        
+        foreach ($this as $name => $item){
+            $property = $class::get($name);
+            $baseProperties[$name] = $property;
+         }
+         print_r($baseProperties);
+         exit();
+    }   
 }

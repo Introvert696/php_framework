@@ -24,6 +24,7 @@ use core\base\controllers\RouteController;
 
 
 try{
+    phpinfo();
     //RouteController::getInstance()->route(); 
     RouteController::getInstance();
     
