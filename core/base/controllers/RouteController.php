@@ -7,16 +7,15 @@
  */
 
 namespace core\base\controllers;
+use core\base\settings\Settings;
 
 
 
 class RouteController {
     static private $_instance;
     
-    public $hair = "Русые";
-    private function __construct(){
-        
-    }
+
+    
     private function __clone() {
         
     }   
@@ -30,5 +29,12 @@ class RouteController {
             return self::$_instance;
         }
         return self::$_instance = new self;
+    }
+    
+    private function __construct(){
+        //получение всех свойств
+        $s = Settings::get('routes');
+        print_r($s);    
+        
     }
 }
