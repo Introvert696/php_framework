@@ -5,7 +5,7 @@ defined("VG_ACCESS") or die("Access denide");
 //шаблоны пользовательской части
 const TEMPLATE = 'templates/default';
 //Путь к админ панели сайта
-const ADMIN_TEMPLATE = 'core/admin/views';
+const ADMIN_TEMPLATE = 'core/admin/view';
 //версия куков для сброса все юзеров типо того
 const COOKIE_VERSION = '1.0.0';
 //Ключ шифрования для куков

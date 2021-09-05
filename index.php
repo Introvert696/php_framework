@@ -15,16 +15,16 @@ session_start();
 //Базовые настройки сайта
 require_once 'config.php';
 //Настройки: пути к шаблонам
-require_once 'core/base/settings/internal_settings.php';
+require_once 'core/base/setting /internal_settings.php';
 //подлючение функции для нормального отображения массива
 require_once 'libraries/function.php';
 //Импортирование пространства имен
-use core\base\exceptions\RouteException;
-use core\base\controllers\RouteController;
+use core\base\exception\RouteException;
+use core\base\controller\RouteController;
 
 
 try{
-    phpinfo();
+
     //RouteController::getInstance()->route(); 
     RouteController::getInstance();
     

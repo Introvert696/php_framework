@@ -4,7 +4,7 @@
 defined("VG_ACCESS") or die("Access denide");
 
 //название файла
-const SITE_URL = 'http://localhost';
+const SITE_URL = 'https://magazine/';
 //базовый путь сайта
 const PATH = '/';
 
