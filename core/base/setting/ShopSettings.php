@@ -10,15 +10,12 @@ class ShopSettings{
     private $baseSettings;
     
     private $routes = [
-      'admin'   => [
-          'name' => 'sudo',
-      ]
-        
-    ];
-    
-    private $templateArr = [
-        'text' => ['price','short'],
-        'textarea' => ['goods_content']
+       
+        'plugins' => [
+            'path' => 'core/plugins/',
+            'hrUrl' => false,
+            'dir' => 'controller'
+        ],
         
     ];
     

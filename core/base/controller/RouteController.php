@@ -50,7 +50,7 @@ class RouteController {
         $address_str = $_SERVER['REQUEST_URI'];
         
         
-        if(strpos($address_str,'/') === strlen($address_str)-1  && strrpos($address_str , '/') !== 0){
+        if(strrpos($address_str,'/') === strlen($address_str)-1  && strrpos($address_str , '/') !== 0){
             //$this->redirect(rtrim($address_str,'/'),301);
         }
         
@@ -69,6 +69,38 @@ class RouteController {
             if(strpos($address_str, $this->routes['admin']['alias']) === strlen(PATH)){
                 //проверка на вход в админку
                 /* Админка*/
+                $url = explode('/',substr($address_str,strlen(PATH.$this->routes['admin']['alias']) + 1));
+                
+                if($url[0] && is_dir($_SERVER['DOCUMENT_ROOT']) . PATH . $this->routes['plugins']['parh'] . $url[0]){
+                    //работа с плагинами
+                    $plugin = array_shift($url);
+                    $pluginSettings = $this->routes['settings']['path'].ucfirst($plugins.'Settings');
+                    
+                    if(file_exists($_SERVER['DOCUMENT_ROOT'] . PATH . $pluginSettings . '.php')){
+                        $pluginSettings = str_replace('/', '\\', $pluginSettings);
+                        $this->routes= $pluginSettings::get('routes');
+                    }
+                    $dir = $this->routes['plugins']['dir'] ? '/'.$this->routes['plugins']['dir']. '/' : '/' ;
+                    $dir = str_replace('//','/',$dir); 
+                    
+                    $this->controller = $this->routes['plugins']['path'].$plugin.$dir;
+                    $hrUrl = $this->routes['plugins']['hrUrl'];
+                    
+                    $route = 'plugins';
+                
+                    
+                    
+                    
+                    
+                } else {
+                    $this->controller = $this->routes['admin']['path'];
+                    
+                    $hrUrl = $this->routes['admin']['hrUrl'];
+                    
+                    $route = 'admin';
+                }
+                
+                
                 
             }
             else{
@@ -92,7 +124,7 @@ class RouteController {
             
             
             
-            
+     
         }else{
             try {
                 throw \Exception('Некоректная директория сайта');
