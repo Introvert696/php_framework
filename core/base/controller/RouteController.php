@@ -122,6 +122,39 @@ class RouteController {
             
             $this->createRoute($route,$url);
             
+            //добавил isset*()
+            if(isset($url[1])){
+                //если есть параметры
+                $count = count($url);               
+                $key = '';
+                
+                //поменял 1 на 0, 2 на 1
+                if(!$hrUrl){
+                    $i = 0;
+                }else{
+                    $this->parameters['alias']=$url[1];
+                    $i = 1;
+                }
+                //print_arr($url);
+                for(;$i < $count;$i++){
+                    if(!$key){
+                        echo 'Создание параметра '.$url[$i];
+                        $key = $url[$i];
+                        $this->parameters[$key] = '';
+                    }else{
+                        $this->parameters[$key] = $url[$i];
+                        $key = '';
+                    }
+                    print_arr($this->parameters);
+                }
+                
+                
+            }
+            
+            
+            
+            
+            exit();
             
             
      
@@ -152,7 +185,8 @@ class RouteController {
         $route = [];
         
         if(!empty($arr[0])){
-            if($this->routes[$var]['routes'][$arr[0]]){
+            // добавил isset()
+            if(isset($this->routes[$var]['routes'][$arr[0]])){
                 $route = explode('/',$this->routes[$var]['routes'][$arr[0]]);
                 
                 $this->controller .= ucfirst($route[0].'Controller');
@@ -172,6 +206,7 @@ class RouteController {
         $this->inputMethod = isset($route[1]) ? $route[1] : $this->routes['default']['inputMethod'];
         $this->outputMethod=  isset($route[2]) ? $route[2] : $this->routes['default']['outputMethod'];
         
+        print_arr($this->controller);
         return;
     }
 }
