@@ -7,7 +7,7 @@
  */
 
 namespace core\base\controller;
-
+use core\base\exceptions;
 use core\base\setting\Settings;
 use core\base\setting\ShopSettings;
 
@@ -59,6 +59,7 @@ class RouteController {
         
         if($path === PATH){
             //Получаем свойство роут класса Сеттинг
+            //Settings::instance();
             $this->routes = Settings::get('routes');
             
             if(!$this->routes){
@@ -69,12 +70,17 @@ class RouteController {
             if(strpos($address_str, $this->routes['admin']['alias']) === strlen(PATH)){
                 //проверка на вход в админку
                 /* Админка*/
-                $url = explode('/',substr($address_str,strlen(PATH.$this->routes['admin']['alias']) + 1));
                 
-                if($url[0] && is_dir($_SERVER['DOCUMENT_ROOT']) . PATH . $this->routes['plugins']['parh'] . $url[0]){
+                $url = explode('/',substr($address_str,strlen(PATH.$this->routes['admin']['alias']) + 1));
+                //print_arr($url);
+                if($url[0] && is_dir($_SERVER['DOCUMENT_ROOT'] . PATH . $this->routes['plugins']['path'] . $url[0])){
+                    
+                    //print_r(is_dir($_SERVER['DOCUMENT_ROOT']) . PATH . $this->routes['plugins']['path'] . $url[0]);
                     //работа с плагинами
-                    $plugin = array_shift($url);
-                    $pluginSettings = $this->routes['settings']['path'].ucfirst($plugins.'Settings');
+                    //$plugin = array_shift($url);
+                    //заменил т.к. не работало
+                    $plugin = $url[0];
+                    $pluginSettings = $this->routes['settings']['path'].ucfirst($plugin.'Settings');
                     
                     if(file_exists($_SERVER['DOCUMENT_ROOT'] . PATH . $pluginSettings . '.php')){
                         $pluginSettings = str_replace('/', '\\', $pluginSettings);
@@ -87,7 +93,7 @@ class RouteController {
                     $hrUrl = $this->routes['plugins']['hrUrl'];
                     
                     $route = 'plugins';
-                
+                //print_arr($this);
                     
                     
                     
@@ -121,40 +127,40 @@ class RouteController {
             }
             
             $this->createRoute($route,$url);
-            
+            //print_r(isset($url[1]));
             //добавил isset*()
             if(isset($url[1])){
                 //если есть параметры
                 $count = count($url);               
                 $key = '';
                 
-                //поменял 1 на 0, 2 на 1
+                
                 if(!$hrUrl){
-                    $i = 0;
+                    $i = 1;
                 }else{
                     $this->parameters['alias']=$url[1];
-                    $i = 1;
+                    $i = 2;
                 }
                 //print_arr($url);
                 for(;$i < $count;$i++){
                     if(!$key){
-                        echo 'Создание параметра '.$url[$i];
+                        //echo 'Создание параметра '.$url[$i];
                         $key = $url[$i];
                         $this->parameters[$key] = '';
                     }else{
                         $this->parameters[$key] = $url[$i];
                         $key = '';
                     }
-                    print_arr($this->parameters);
+                    //print_arr($this->parameters);
                 }
                 
                 
             }
             
+               print_arr($this);
             
             
-            
-            exit();
+            //exit();
             
             
      
@@ -190,7 +196,7 @@ class RouteController {
                 $route = explode('/',$this->routes[$var]['routes'][$arr[0]]);
                 
                 $this->controller .= ucfirst($route[0].'Controller');
-                print_arr($this->controller);
+                //print_arr($this->controller);
                 
                 
             }else{
@@ -206,7 +212,7 @@ class RouteController {
         $this->inputMethod = isset($route[1]) ? $route[1] : $this->routes['default']['inputMethod'];
         $this->outputMethod=  isset($route[2]) ? $route[2] : $this->routes['default']['outputMethod'];
         
-        print_arr($this->controller);
+        //print_arr($this->controller);
         return;
     }
 }

@@ -16,6 +16,9 @@ class Settings
             'alias' => 'admin',
             'path' => 'core/admin/controller/',
             'hrUrl' => false,
+            'routes' => [
+               
+            ]
             
         ],
         'settings' =>[
@@ -50,7 +53,7 @@ class Settings
     ];
     
     private function __construct(){
-        
+        self::instance();
     }
     private function __clone(){
         
@@ -62,7 +65,7 @@ class Settings
         return self::$_instance = new self;
     }
     static public function get($properiety){
-        return self::instance()->$properiety;
+        return self::$_instance;
     }
     public function clueProperities($class){
         $baseProperties = [];

@@ -1,6 +1,8 @@
 <?php
 
 defined("VG_ACCESS") or die("Access denide");
+use core\base\exceptions;
+
 
 //шаблоны пользовательской части
 const TEMPLATE = 'templates/default';
@@ -32,7 +34,7 @@ const USER_CSS_JS = [
     'scripts' => []
 ];
 
-use core\base\exceptions\RouteException;
+
 
 
 //автозагрузка классов
